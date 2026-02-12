@@ -1,0 +1,17 @@
+[project]
+name = "comfyui_jnodes"
+description = "A set of workflow orchestration nodes for Flux, Wan2.2, and LTX."
+version = "1.0.0"
+authors = [
+    { name = "Joseph Mills", email = "m_jimmer@mantle-os.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+
+#[project.urls]
+#Repository = "https://github.com/yourusername/comfyui_production_tools"
+
+# This section is specific to ComfyUI nodes
+[tool.comfy]
+publisher = "Mantle OS"
+icon = ""
