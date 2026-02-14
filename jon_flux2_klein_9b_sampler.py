@@ -1,5 +1,5 @@
 import nodes
-from .jon_utils import get_node_class
+from .jon_utils import get_node_class, send_status
 # comfy_extras/nodes_flux.py
 # comfy_extras/nodes_custom_sampler.py
 # comfy_extras/nodes_edit_model.py
@@ -61,9 +61,9 @@ class JonFlux2Klein9bSampler:
             }
         }
 
-    RETURN_TYPES = ("IMAGE",)
-    RETURN_NAMES = ("image",)
-    OUTPUT_TOOLTIPS = ("The Generated Image",)
+    RETURN_TYPES = ()
+    RETURN_NAMES = ()
+    OUTPUT_TOOLTIPS = ()
     OUTPUT_NODE = True
 
     FUNCTION = "sample"
@@ -74,6 +74,8 @@ class JonFlux2Klein9bSampler:
                model, clip, vae,
                positive, seed, width, height,
                img2img=False, image1=None, image2=None):
+
+        ns = "JonFlux2Klein9bSampler"
 
         f_pos_prompt = None
         f_neg_prompt = None
@@ -88,7 +90,7 @@ class JonFlux2Klein9bSampler:
         # Clip -> TextEncode
         if clip is not None:
             try:
-                print(f"[JonFlux2Klein9bSampler] Text Encode Flux 2 K 9b Detected")
+                send_status(ns, "Text Encode Flux 2 K 9b Detected")
                 p_prompt = nodes.CLIPTextEncode().encode(clip=clip, text=positive)[0]
                 n_prompt = nodes.ConditioningZeroOut().zero_out(conditioning=p_prompt)[0]
 
@@ -101,23 +103,23 @@ class JonFlux2Klein9bSampler:
                         raise ImportError("[JonFlux2Klein9bSampler] ReferenceLatent Failed to import")
 
                     if image1 is not None:
-                        print(f"[JonFlux2Klein9bSampler] using 1 images for image to image from image 1")
+                        send_status(ns, "using 1 images for image to image from image 1")
                         img1_lat = nodes.VAEEncode().encode(vae, image1)[0]
                         img1_pos_cond = ReferenceLatent().execute(conditioning=p_prompt, latent=img1_lat)[0]
                         img1_neg_cond = ReferenceLatent().execute(conditioning=n_prompt, latent=img1_lat)[0]
                         if image2 is None:
-                            print(f"[JonFlux2Klein9bSampler] image to image only one image")
+                            send_status(ns, "image to image only one image")
                             f_pos_prompt = img1_pos_cond
                             f_neg_prompt = img1_neg_cond
                     elif image2 is not None and image1 is not None:
-                        print(f"[JonFlux2Klein9bSampler] using 2 images for img to img from image 1 and image 2")
+                        send_status(ns, "using 2 images for img to img from image 1 and image 2")
                         img2_lat = nodes.VAEEncode().encode(vae, image2)[0]
                         img2_pos_cond = ReferenceLatent().execute(conditioning=p_prompt, latent=img1_lat)[0]
                         img2_neg_cond = ReferenceLatent().execute(conditioning=n_prompt, latent=img1_lat)[0]
                         f_pos_prompt = img2_pos_cond
                         f_neg_prompt = img2_neg_cond
                     elif image2 is not None and image1 is None:
-                        print(f"[JonFlux2Klein9bSampler] using 1 images for image to image from image 2")
+                        send_status(ns, "using 1 images for image to image from image 2")
                         img2_lat = nodes.VAEEncode().encode(vae, image2)[0]
                         img2_pos_cond = ReferenceLatent().execute(conditioning=p_prompt, latent=img2_lat)[0]
                         img2_neg_cond = ReferenceLatent().execute(conditioning=n_prompt, latent=img2_lat)[0]
@@ -132,7 +134,7 @@ class JonFlux2Klein9bSampler:
                 raise ValueError("[JonFlux2Klein9bSampler] CLIPTextEncode Failed")
         if p_prompt is None or n_prompt is None:
             raise ValueError("[JonFlux2Klein9bSampler] Text Encode Failed")
-        print(f"[JonFlux2Klein9bSampler] Text Encode Flux 2 K 9b Done")
+        send_status(ns, "Text Encode Flux 2 K 9b Done")
 
 
         f_width = int(width)
@@ -169,23 +171,35 @@ class JonFlux2Klein9bSampler:
         SamplerCustomAdvanced = get_node_class("SamplerCustomAdvanced")
         if not SamplerCustomAdvanced:
             raise ImportError("[JonFlux2Klein9bSampler] SamplerCustomAdvanced Failed to import")
-        samp_lat = SamplerCustomAdvanced().execute(noise=noise, guider=cfg, sampler=samp_algo, sigmas=sigmas, latent_image=empty_lat)[0]
+        samp_lat = SamplerCustomAdvanced().execute(
+            noise=noise,
+            guider=cfg,
+            sampler=samp_algo,
+            sigmas=sigmas,
+            latent_image=empty_lat)[0]
 
-        print(f"[JonFlux2Klein9bSampler] KSampler Done")
+        send_status(ns, "KSampler Done")
 
         # VAE decode
         image_result = nodes.VAEDecode().decode(vae, samp_lat)
 
         # Save Image
         if save_image:
-            nodes.SaveImage().save_images(
+            full_output = nodes.SaveImage().save_images(
                 images=image_result[0],
                 filename_prefix=save_name,
                 prompt=positive,
                 extra_pnginfo=None
             )
+            ui_results = full_output.get("ui", {})
+        else:
+            preview_output = nodes.PreviewImage().save_images(
+                images=image_result[0],
+                filename_prefix="JonPreview",
+            )
+            ui_results = preview_output.get("ui", {})
 
-        return image_result
+        return {"ui": ui_results}
 
 NODE_CLASS_MAPPINGS = {
     "JonFlux2Klein9bSampler": JonFlux2Klein9bSampler
