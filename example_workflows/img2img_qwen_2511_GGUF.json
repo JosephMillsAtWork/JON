@@ -1,8 +1,8 @@
 {
   "id": "1a5d393e-08f9-4c63-b945-18f798dde27a",
   "revision": 0,
-  "last_node_id": 8,
-  "last_link_id": 11,
+  "last_node_id": 9,
+  "last_link_id": 20,
   "nodes": [
     {
       "id": 2,
@@ -64,6 +64,8 @@
         }
       ],
       "properties": {
+        "aux_id": "JosephMillsAtWork/JON",
+        "ver": "1d7b48fbfe2bb62fe5ad57865d72f448e73123c4",
         "Node name for S&R": "JonChannelMixer"
       },
       "widgets_values": [
@@ -79,6 +81,144 @@
         0.31,
         0.68,
         0
+      ]
+    },
+    {
+      "id": 8,
+      "type": "MarkdownNote",
+      "pos": [
+        -1733.4038084091248,
+        -52.99491824307658
+      ],
+      "size": [
+        386.860093818485,
+        124.60948617383315
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "---\n# <<< This is the same as above\n---\n\n\nIts only here to show how it works. The values are the same.\n"
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 9,
+      "type": "JonQwen2511Sampler",
+      "pos": [
+        -2028.3209273975958,
+        -860.40134088211
+      ],
+      "size": [
+        400,
+        562
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 12
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 13
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 14
+        },
+        {
+          "name": "image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 15
+        },
+        {
+          "name": "image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": 16
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 17
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 18
+        },
+        {
+          "name": "positive",
+          "type": "STRING",
+          "widget": {
+            "name": "positive"
+          },
+          "link": 19
+        },
+        {
+          "name": "negative",
+          "type": "STRING",
+          "widget": {
+            "name": "negative"
+          },
+          "link": 20
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "aux_id": "JosephMillsAtWork/JON",
+        "ver": "1d7b48fbfe2bb62fe5ad57865d72f448e73123c4",
+        "Node name for S&R": "JonQwen2511Sampler"
+      },
+      "widgets_values": [
+        null,
+        null,
+        false,
+        "QWEN2511/Jon",
+        null,
+        null,
+        131673359357359,
+        "randomize",
+        null,
+        null,
+        0,
+        0,
+        null,
+        null,
+        "",
+        "",
+        4
       ]
     },
     {
@@ -107,21 +247,21 @@
           "name": "model",
           "type": "MODEL",
           "links": [
-            2
+            12
           ]
         },
         {
           "name": "clip",
           "type": "CLIP",
           "links": [
-            3
+            13
           ]
         },
         {
           "name": "vae",
           "type": "VAE",
           "links": [
-            4
+            14
           ]
         },
         {
@@ -131,6 +271,8 @@
         }
       ],
       "properties": {
+        "aux_id": "JosephMillsAtWork/JON",
+        "ver": "1d7b48fbfe2bb62fe5ad57865d72f448e73123c4",
         "Node name for S&R": "JonLoader"
       },
       "widgets_values": [
@@ -180,18 +322,160 @@
       ]
     },
     {
+      "id": 1,
+      "type": "JonWorkflowSettings",
+      "pos": [
+        -2314.1288186372008,
+        -709.9382060998347
+      ],
+      "size": [
+        235.142578125,
+        958
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "override_image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "override_image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "override_image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image1",
+          "type": "IMAGE",
+          "links": [
+            15
+          ]
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "image3",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": [
+            16
+          ]
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            17
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            18
+          ]
+        },
+        {
+          "name": "positive_text",
+          "type": "STRING",
+          "links": [
+            19
+          ]
+        },
+        {
+          "name": "negative_text",
+          "type": "STRING",
+          "links": [
+            20
+          ]
+        },
+        {
+          "name": "total_frames",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": null
+        },
+        {
+          "name": "upscale_enabled",
+          "type": "BOOLEAN",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "JosephMillsAtWork/JON",
+        "ver": "1d7b48fbfe2bb62fe5ad57865d72f448e73123c4",
+        "Node name for S&R": "JonWorkflowSettings"
+      },
+      "widgets_values": [
+        null,
+        null,
+        "example.png",
+        "example.png",
+        "example.png",
+        null,
+        null,
+        0,
+        "fixed",
+        null,
+        null,
+        "16:9",
+        "1080p",
+        "Landscape",
+        null,
+        null,
+        "A Woman working a store called \"Jon\" In the style of a comic book",
+        null,
+        null,
+        "",
+        null,
+        null,
+        "bicubic",
+        "PreserveAspectCrop",
+        "black",
+        null,
+        null,
+        5,
+        null,
+        null,
+        false
+      ]
+    },
+    {
       "id": 5,
       "type": "a3c092c0-bad5-48fb-977d-ecb44a2f8915",
       "pos": [
-        -2030.9711696158383,
-        -312.57329103427753
+        -1983.3188197476122,
+        -59.17746288345368
       ],
       "size": [
-        408.947593705137,
-        378.4262970421056
+        210,
+        338
       ],
       "flags": {},
-      "order": 1,
+      "order": 3,
       "mode": 4,
       "inputs": [
         {
@@ -272,322 +556,15 @@
       ]
     },
     {
-      "id": 6,
-      "type": "JonQwen2511Sampler",
-      "pos": [
-        -2021.4627962349632,
-        -850.2787646319904
-      ],
-      "size": [
-        400,
-        410
-      ],
-      "flags": {},
-      "order": 6,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 2
-        },
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 3
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 4
-        },
-        {
-          "name": "image1",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": 11
-        },
-        {
-          "name": "image2",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "image3",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "seed",
-          "type": "INT",
-          "widget": {
-            "name": "seed"
-          },
-          "link": 5
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 6
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 7
-        },
-        {
-          "name": "positive",
-          "type": "STRING",
-          "widget": {
-            "name": "positive"
-          },
-          "link": 8
-        },
-        {
-          "name": "negative",
-          "type": "STRING",
-          "widget": {
-            "name": "negative"
-          },
-          "link": 9
-        }
-      ],
-      "outputs": [
-        {
-          "name": "image",
-          "type": "IMAGE",
-          "links": [
-            10
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JonQwen2511Sampler"
-      },
-      "widgets_values": [
-        true,
-        "QWEN2511/Jon",
-        572437122485725,
-        "randomize",
-        0,
-        0,
-        "",
-        "",
-        4
-      ]
-    },
-    {
-      "id": 7,
-      "type": "PreviewImage",
-      "pos": [
-        -1555.229995594379,
-        -869.6705688605799
-      ],
-      "size": [
-        597.241783404035,
-        466.088410559984
-      ],
-      "flags": {
-        "collapsed": false
-      },
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 10
-        }
-      ],
-      "outputs": [],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.11.0",
-        "Node name for S&R": "PreviewImage"
-      },
-      "widgets_values": []
-    },
-    {
-      "id": 8,
-      "type": "MarkdownNote",
-      "pos": [
-        -1604.5798192326702,
-        -220.59136544310002
-      ],
-      "size": [
-        386.860093818485,
-        124.60948617383315
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "---\n# <<< This is the same as above\n---\n\n\nIts only here to show how it works. The values are the same.\n"
-      ],
-      "color": "#222",
-      "bgcolor": "#000"
-    },
-    {
-      "id": 1,
-      "type": "JonWorkflowSettings",
-      "pos": [
-        -2314.1288186372008,
-        -709.9382060998347
-      ],
-      "size": [
-        235.142578125,
-        958
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "override_image1",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "override_image2",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "override_image3",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "image1",
-          "type": "IMAGE",
-          "links": [
-            11
-          ]
-        },
-        {
-          "name": "image2",
-          "type": "IMAGE",
-          "links": []
-        },
-        {
-          "name": "image3",
-          "type": "IMAGE",
-          "links": []
-        },
-        {
-          "name": "seed",
-          "type": "INT",
-          "links": [
-            5
-          ]
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "links": [
-            6
-          ]
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": [
-            7
-          ]
-        },
-        {
-          "name": "positive_text",
-          "type": "STRING",
-          "links": [
-            8
-          ]
-        },
-        {
-          "name": "negative_text",
-          "type": "STRING",
-          "links": [
-            9
-          ]
-        },
-        {
-          "name": "total_frames",
-          "type": "INT",
-          "links": null
-        },
-        {
-          "name": "fps",
-          "type": "FLOAT",
-          "links": null
-        },
-        {
-          "name": "upscale_enabled",
-          "type": "BOOLEAN",
-          "links": null
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "JonWorkflowSettings"
-      },
-      "widgets_values": [
-        null,
-        null,
-        "example.png",
-        "example.png",
-        "example.png",
-        null,
-        null,
-        0,
-        "fixed",
-        null,
-        null,
-        "16:9",
-        "1080p",
-        "Landscape",
-        null,
-        null,
-        "A Woman working a store called \"Jon\" In the style of a comic book",
-        null,
-        null,
-        "",
-        null,
-        null,
-        "bicubic",
-        "PreserveAspectCrop",
-        "black",
-        null,
-        null,
-        5,
-        null,
-        null,
-        false
-      ]
-    },
-    {
       "id": 4,
       "type": "MarkdownNote",
       "pos": [
-        -3711.1156877941908,
-        -833.6939604614527
+        -3568.0333906596998,
+        -830.9424068913592
       ],
       "size": [
-        668.164195673291,
-        550.2232684436867
+        497.5661361144207,
+        474.55477062768057
       ],
       "flags": {},
       "order": 4,
@@ -612,84 +589,76 @@
       "FLOAT"
     ],
     [
-      2,
+      12,
       3,
       0,
-      6,
+      9,
       0,
       "MODEL"
     ],
     [
-      3,
+      13,
       3,
       1,
-      6,
+      9,
       1,
       "CLIP"
     ],
     [
-      4,
+      14,
       3,
       2,
-      6,
+      9,
       2,
       "VAE"
     ],
     [
-      5,
+      15,
+      1,
+      0,
+      9,
+      3,
+      "IMAGE"
+    ],
+    [
+      16,
       1,
       3,
-      6,
+      9,
       6,
       "INT"
     ],
     [
-      6,
+      17,
       1,
       4,
-      6,
+      9,
       7,
       "INT"
     ],
     [
-      7,
+      18,
       1,
       5,
-      6,
+      9,
       8,
       "INT"
     ],
     [
-      8,
+      19,
       1,
       6,
-      6,
+      9,
       9,
       "STRING"
     ],
     [
-      9,
+      20,
       1,
       7,
-      6,
+      9,
       10,
       "STRING"
-    ],
-    [
-      10,
-      6,
-      0,
-      7,
-      0,
-      "IMAGE"
-    ],
-    [
-      11,
-      1,
-      0,
-      6,
-      3,
-      "IMAGE"
     ]
   ],
   "groups": [],
@@ -1512,10 +1481,10 @@
   "extra": {
     "workflowRendererVersion": "LG",
     "ds": {
-      "scale": 0.888377519351163,
+      "scale": 0.8076159266828756,
       "offset": [
-        4000.4554781228235,
-        1143.4391508369145
+        4460.242282098168,
+        1344.056544787581
       ]
     },
     "frontendVersion": "1.37.11"

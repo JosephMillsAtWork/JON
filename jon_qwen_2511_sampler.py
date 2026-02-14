@@ -1,5 +1,5 @@
 import nodes
-from .jon_utils import get_node_class
+from .jon_utils import get_node_class, send_status
 
 class JonQwen2511Sampler:
     def __init__(self):
@@ -78,9 +78,9 @@ class JonQwen2511Sampler:
 
         }
 
-    RETURN_TYPES = ("IMAGE",)
-    RETURN_NAMES = ("image",)
-    OUTPUT_TOOLTIPS = ("The Generated Image",)
+    RETURN_TYPES = ()
+    RETURN_NAMES = ()
+    OUTPUT_TOOLTIPS = ()
     OUTPUT_NODE = True
 
     FUNCTION = "sample"
@@ -92,7 +92,7 @@ class JonQwen2511Sampler:
                positive, negative, seed, width, height, steps=4,
                image1=None, image2=None, image3=None):
 
-        # Clip -> TextEncode
+        ns = "JonQwen2511Sampler"
         p_prompt = None
         n_prompt = None
         empty_lat = None
@@ -101,7 +101,7 @@ class JonQwen2511Sampler:
 
         if clip is not None:
             try:
-                print(f"[JonQwen2511Sampler] Text Encode Qwen Detected")
+                send_status(ns, "Text Encode Qwen Detected")
 
                 TextEncodeQwenImageEdit = get_node_class("TextEncodeQwenImageEdit")
                 TextEncodeQwenImageEditPlus = get_node_class("TextEncodeQwenImageEditPlus")
@@ -110,15 +110,15 @@ class JonQwen2511Sampler:
                     raise ImportError("TextEncodeQwenImageEdit nodes not found!")
 
                 if image3 is not None and image2 is not None and image1 is not None:
-                    print(f"[JonQwen2511Sampler] Text Encode Qwen 3 Image")
+                    send_status(ns, "Text Encode Qwen 3 Image")
                     p_prompt = TextEncodeQwenImageEditPlus.execute(clip=clip,  prompt=positive, vae=vae, image1=image1, image2=image2, image3=image3)[0]
                     n_prompt = TextEncodeQwenImageEditPlus.execute(clip=clip,  prompt=negative, vae=vae, image1=image1, image2=image2, image3=image3)[0]
                 elif image1 is not None:
-                    print(f"[JonQwen2511Sampler] Text Encode Qwen 1 Image")
+                    send_status(ns, "Text Encode Qwen 1 Image")
                     p_prompt = TextEncodeQwenImageEdit().execute(clip=clip, prompt=positive, vae=vae, image=image1)[0]
                     n_prompt = TextEncodeQwenImageEdit().execute(clip=clip, prompt=negative, vae=vae, image=image1)[0]
                 else:
-                    print(f"[JonQwen2511Sampler] Text Encode Qwen 0 Image")
+                    send_status(ns, "Text Encode Qwen 0 Image")
                     p_prompt = TextEncodeQwenImageEdit().execute(clip=clip, prompt=positive, vae=None, image=None)[0]
                     n_prompt = TextEncodeQwenImageEdit().execute(clip=clip, prompt=negative, vae=None, image=None)[0]
             except Exception as e:
@@ -130,9 +130,7 @@ class JonQwen2511Sampler:
             raise ValueError("[JonQwen2511Sampler] Text Encode Failed")
 
 
-        print(f"[JonQwen2511Sampler] Text Encode Qwen Done")
-
-
+        send_status(ns, "Text Encode Qwen Done")
 
         ## Empty LAT
         empty_lat_result = nodes.EmptyLatentImage().generate(width, height, 1)
@@ -157,23 +155,26 @@ class JonQwen2511Sampler:
             denoise=1.0
         )
         samp_lat = samp_lat_result[0]
-        print(f"[JonQwen2511Sampler] KSampler Qwen Done")
+        send_status(ns, "KSampler Qwen Done")
 
         image_result = nodes.VAEDecode().decode(vae, samp_lat)
 
-        #
         if save_image:
-            # def save_images(self, images, filename_prefix="ComfyUI", prompt=None, extra_pnginfo=None):
-            nodes.SaveImage().save_images(
+            full_output = nodes.SaveImage().save_images(
                 images=image_result[0],
                 filename_prefix=save_name,
                 prompt=positive,
                 extra_pnginfo=None
             )
+            ui_results = full_output.get("ui", {})
+        else:
+            preview_output = nodes.PreviewImage().save_images(
+                images=image_result[0],
+                filename_prefix="JonPreview",
+            )
+            ui_results = preview_output.get("ui", {})
 
-
-        return image_result
-
+        return {"ui": ui_results}
 
 NODE_CLASS_MAPPINGS = {
     "JonQwen2511Sampler": JonQwen2511Sampler
