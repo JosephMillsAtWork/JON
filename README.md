@@ -1,5 +1,7 @@
 # JON (Joseph's odd loader's)
 
+![Alt text](example_workflows/jon_all.jpg "all workflow") 
+
 simple set of nodes to bealbe to make my use case of comfyui a bit more simple. 
 
 [ComfyUI-GGUF](https://github.com/city96/ComfyUI-GGUF) is required to use these nodes. 
