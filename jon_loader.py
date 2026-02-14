@@ -13,66 +13,9 @@ import comfy.model_management as model_management
 
 from .jon_utils import LIGHTRICKS_AVAILABLE, SAGE_AVAILABLE, get_node_class, get_sage_func
 
-# # comfy.ldm.lightricks
-# LIGHTRICKS_AVAILABLE = False
-# try:
-#     from comfy.ldm.lightricks.vae.audio_vae import AudioVAE
-#     LIGHTRICKS_AVAILABLE = True
-# except ImportError:
-#     pass
-#
-#
-# SAGE_AVAILABLE = False
-# try:
-#     import sageattention
-#     SAGE_AVAILABLE = True
-# except ImportError:
-#     pass
-#
-# def get_node_class(class_name):
-#     if class_name in nodes.NODE_CLASS_MAPPINGS:
-#         return nodes.NODE_CLASS_MAPPINGS[class_name]
-#     return None
-
-# def get_sage_func(sage_mode):
-#     if sage_mode == "auto":
-#         from sageattention import sageattn as func
-#         return func
-#     elif sage_mode == "sageattn_qk_int8_pv_fp16_cuda":
-#         from sageattention import sageattn_qk_int8_pv_fp16_cuda as func
-#         return lambda q,k,v,**kw: func(q,k,v, pv_accum_dtype="fp32", **kw)
-#     elif sage_mode == "sageattn_qk_int8_pv_fp16_triton":
-#         from sageattention import sageattn_qk_int8_pv_fp16_triton as func
-#         return func
-#     elif sage_mode == "sageattn_qk_int8_pv_fp8_cuda":
-#         from sageattention import sageattn_qk_int8_pv_fp8_cuda as func
-#         return lambda q,k,v,**kw: func(q,k,v, pv_accum_dtype="fp32+fp32", **kw)
-#     elif sage_mode == "sageattn_qk_int8_pv_fp8_cuda++":
-#         from sageattention import sageattn_qk_int8_pv_fp8_cuda as func
-#         return lambda q,k,v,**kw: func(q,k,v, pv_accum_dtype="fp32+fp16", **kw)
-#     elif "sageattn3" in sage_mode:
-#         try:
-#             from sageattn3 import sageattn3_blackwell
-#             return lambda q,k,v,**kw: sageattn3_blackwell(
-#                 q.transpose(1,2), k.transpose(1,2), v.transpose(1,2),
-#                 per_block_mean=(sage_mode == "sageattn3_per_block_mean"), **kw
-#             ).transpose(1,2)
-#         except ImportError:
-#             return None
-#     return None
-
 class JonLoader:
     @classmethod
     def INPUT_TYPES(s):
-
-        supported_models = [
-            "z-image-turbo-txt2img", "z-image-turbo-img2img",
-            "flux2-klein-9b", "flux2-klein-9b-img2img", "flux2-klein-9b-img2img"
-            "qwen-2511-txt2img", "qwen-2511-img2img", "qwen-2511-imgs2img",
-            "wan2.2-img2vid",
-            "ltx2"
-        ]
-
         sage_kernels = [
             "disabled",
             "auto",

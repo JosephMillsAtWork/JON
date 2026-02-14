@@ -15,6 +15,15 @@ class JonWorkflowSettings:
 
     @classmethod
     def INPUT_TYPES(s):
+        supported_models = [
+            "custom "
+            "z-image-turbo-txt2img", "z-image-turbo-img2img",
+            "flux2-klein-9b", "flux2-klein-9b-img2img", "flux2-klein-9b-img2img"
+            "qwen-2511-txt2img", "qwen-2511-img2img", "qwen-2511-imgs2img",
+            "wan2.2-img2vid",
+            "ltx2"
+        ]
+
         seconds_list = list(range(1, 21))
         crop_rules = ["PreserveAspectCrop", "PreserveAspectFit", "Stretch", "Center (No Resize)"]
 

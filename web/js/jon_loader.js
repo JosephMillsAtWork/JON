@@ -5,6 +5,8 @@ let CACHED_LORA_NAMES = [];
 app.registerExtension({
     name: "JosephOddNodes.JonLoaders",
     async beforeRegisterNodeDef(nodeType, nodeData, app) {
+
+
         const targetNodes = ["JonLoader", "JonModelOnlyLoader"];
 
         if (targetNodes.includes(nodeData.name)) {

@@ -1,155 +1,9 @@
 {
   "id": "57e2b4d4-84b5-4a0c-8214-179f86627f47",
   "revision": 0,
-  "last_node_id": 19,
-  "last_link_id": 28,
+  "last_node_id": 20,
+  "last_link_id": 40,
   "nodes": [
-    {
-      "id": 6,
-      "type": "JonWorkflowSettings",
-      "pos": [
-        1260.7034364232977,
-        446.45999066161767
-      ],
-      "size": [
-        400,
-        958
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "override_image1",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "override_image2",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        },
-        {
-          "name": "override_image3",
-          "shape": 7,
-          "type": "IMAGE",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "image1",
-          "type": "IMAGE",
-          "links": [
-            9
-          ]
-        },
-        {
-          "name": "image2",
-          "type": "IMAGE",
-          "links": null
-        },
-        {
-          "name": "image3",
-          "type": "IMAGE",
-          "links": null
-        },
-        {
-          "name": "seed",
-          "type": "INT",
-          "links": [
-            10
-          ]
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "links": [
-            12
-          ]
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": [
-            13
-          ]
-        },
-        {
-          "name": "positive_text",
-          "type": "STRING",
-          "links": [
-            14
-          ]
-        },
-        {
-          "name": "negative_text",
-          "type": "STRING",
-          "links": [
-            15
-          ]
-        },
-        {
-          "name": "total_frames",
-          "type": "INT",
-          "links": [
-            16
-          ]
-        },
-        {
-          "name": "fps",
-          "type": "FLOAT",
-          "links": [
-            17
-          ]
-        },
-        {
-          "name": "upscale_enabled",
-          "type": "BOOLEAN",
-          "links": null
-        }
-      ],
-      "properties": {
-        "aux_id": "JosephMillsAtWork/JON",
-        "ver": "b11c217be5dd3ad9c1660a4e136ba471a72a8c05",
-        "Node name for S&R": "JonWorkflowSettings"
-      },
-      "widgets_values": [
-        null,
-        null,
-        "example.png",
-        "example.png",
-        "example.png",
-        null,
-        null,
-        0,
-        "fixed",
-        null,
-        null,
-        "4:3",
-        "480p",
-        "Landscape",
-        null,
-        null,
-        "make a video about a woman working in a store called JON",
-        null,
-        null,
-        "",
-        null,
-        null,
-        "bicubic",
-        "PreserveAspectCrop",
-        "black",
-        null,
-        null,
-        1,
-        null,
-        null,
-        false
-      ]
-    },
     {
       "id": 13,
       "type": "JonChannelMixer",
@@ -162,7 +16,7 @@
         600
       ],
       "flags": {},
-      "order": 1,
+      "order": 0,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -231,15 +85,84 @@
       ]
     },
     {
-      "id": 7,
+      "id": 16,
+      "type": "MarkdownNote",
+      "pos": [
+        -198.40467115551036,
+        264.8582862533633
+      ],
+      "size": [
+        477.7338719896143,
+        565.9580731719371
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "## Model links\n\n## text_encoders\n---\n- [umt5_xxl_fp8_e4m3fn_scaled.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors?download=true)\n\n## LoRA's\n---\n- [high_noise_model.safetensors](https://huggingface.co/lightx2v/Wan2.2-Lightning/resolve/main/Wan2.2-I2V-A14B-4steps-lora-rank64-Seko-V1/high_noise_model.safetensors?download=true)\n- [low_noise_model.safetensors](https://huggingface.co/lightx2v/Wan2.2-Lightning/resolve/main/Wan2.2-I2V-A14B-4steps-lora-rank64-Seko-V1/low_noise_model.safetensors?download=true)\n\n## Model\n---\n- [Wan2.2-I2V-A14B-HighNoise-Q4_K_M.gguf](https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/HighNoise/Wan2.2-I2V-A14B-HighNoise-Q4_K_M.gguf?download=true)\n- [Wan2.2-I2V-A14B-LowNoise-Q4_K_M.gguf](https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/LowNoise/Wan2.2-I2V-A14B-LowNoise-Q4_K_M.gguf?download=true)\n\n\n## VAE\n---\n- [Wan2.1_VAE.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors?download=true)\n\n\n## Model Storage Location\n---\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 text_encoders/WAN_2.2/\n|   │      └── umt5_xxl_fp8_e4m3fn_scaled.safetensors\n│   ├── 📂 loras/WAN_2.2/\n│   │      └── low_noise_model.safetensors\n│   │      └── high_noise_model.safetensors\n│   ├── 📂 diffusion_models/WAN_2.2/\n│   │      └── Wan2.2-I2V-A14B-HighNoise-Q4_K_M.gguf\n│   │      └── Wan2.2-I2V-A14B-LowNoise-Q4_K_M.gguf\n│   └── 📂 vae/WAN_2.2/\n│          └── Wan2.1_VAE.safetensors\n```\n"
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 19,
+      "type": "MarkdownNote",
+      "pos": [
+        987.7038245965724,
+        151.38578660374978
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "# LOW\n\n"
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 18,
+      "type": "MarkdownNote",
+      "pos": [
+        667.091398291898,
+        91.85599385127738
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "# HIGH\n"
+      ],
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 20,
       "type": "JonWan22Sampler",
       "pos": [
-        1749.3761478653494,
-        223.10852916611242
+        1746.890936409195,
+        262.07886027978793
       ],
       "size": [
         400,
-        482
+        656
       ],
       "flags": {},
       "order": 7,
@@ -248,27 +171,27 @@
         {
           "name": "model_high",
           "type": "MODEL",
-          "link": 26
+          "link": 31
         },
         {
           "name": "model_low",
           "type": "MODEL",
-          "link": 21
+          "link": 30
         },
         {
           "name": "clip",
           "type": "CLIP",
-          "link": 27
+          "link": 32
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 28
+          "link": 33
         },
         {
           "name": "start_image",
           "type": "IMAGE",
-          "link": 9
+          "link": 29
         },
         {
           "name": "end_image",
@@ -282,7 +205,7 @@
           "widget": {
             "name": "seed"
           },
-          "link": 10
+          "link": 34
         },
         {
           "name": "width",
@@ -290,7 +213,7 @@
           "widget": {
             "name": "width"
           },
-          "link": 12
+          "link": 35
         },
         {
           "name": "height",
@@ -298,7 +221,7 @@
           "widget": {
             "name": "height"
           },
-          "link": 13
+          "link": 36
         },
         {
           "name": "positive",
@@ -306,7 +229,7 @@
           "widget": {
             "name": "positive"
           },
-          "link": 14
+          "link": 37
         },
         {
           "name": "negative",
@@ -314,7 +237,7 @@
           "widget": {
             "name": "negative"
           },
-          "link": 15
+          "link": 38
         },
         {
           "name": "total_frames",
@@ -322,7 +245,7 @@
           "widget": {
             "name": "total_frames"
           },
-          "link": 16
+          "link": 39
         },
         {
           "name": "fps",
@@ -330,28 +253,96 @@
           "widget": {
             "name": "fps"
           },
-          "link": 17
+          "link": 40
         }
       ],
       "outputs": [],
       "properties": {
         "aux_id": "JosephMillsAtWork/JON",
-        "ver": "b11c217be5dd3ad9c1660a4e136ba471a72a8c05",
+        "ver": "065e12381d4c119e1cff79f46cafac077de7983e",
         "Node name for S&R": "JonWan22Sampler"
       },
       "widgets_values": [
-        true,
+        null,
+        null,
+        false,
         "WAN_22/Jon",
-        true,
-        745248962113136,
+        false,
+        "auto",
+        null,
+        null,
+        0,
         "randomize",
+        null,
+        null,
         0,
         0,
+        null,
+        null,
         "",
         "",
+        null,
+        null,
         0,
-        24,
-        "auto"
+        24
+      ]
+    },
+    {
+      "id": 12,
+      "type": "JonModelOnlyLoader",
+      "pos": [
+        954.4962488660937,
+        344.95917888834634
+      ],
+      "size": [
+        283.927734375,
+        434
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "lightning_low_noise_model_strength",
+          "type": "FLOAT",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "JosephMillsAtWork/JON",
+        "ver": "b11c217be5dd3ad9c1660a4e136ba471a72a8c05",
+        "Node name for S&R": "JonModelOnlyLoader"
+      },
+      "widgets_values": [
+        null,
+        null,
+        true,
+        null,
+        null,
+        "sageattn_qk_int8_pv_fp8_cuda++",
+        true,
+        "{\"442944\":{\"enabled\":true,\"name\":\"WAN_2.2/lightning_low_noise_model.safetensors\",\"input_name\":\"lightning_low_noise_model_strength\"}}",
+        null,
+        null,
+        "None",
+        "WAN_2.2/Wan2.2-I2V-A14B-HighNoise-Q4_K_M.gguf",
+        null,
+        null,
+        null,
+        null,
+        true,
+        "WAN_2.2/lightning_low_noise_model.safetensors",
+        null,
+        null
       ]
     },
     {
@@ -380,21 +371,21 @@
           "name": "model",
           "type": "MODEL",
           "links": [
-            26
+            31
           ]
         },
         {
           "name": "clip",
           "type": "CLIP",
           "links": [
-            27
+            32
           ]
         },
         {
           "name": "vae",
           "type": "VAE",
           "links": [
-            28
+            33
           ]
         },
         {
@@ -455,206 +446,153 @@
       ]
     },
     {
-      "id": 16,
-      "type": "MarkdownNote",
+      "id": 6,
+      "type": "JonWorkflowSettings",
       "pos": [
-        -198.40467115551036,
-        264.8582862533633
+        1260.7034364232977,
+        446.45999066161767
       ],
       "size": [
-        477.7338719896143,
-        565.9580731719371
+        400,
+        958
       ],
       "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "## Model links\n\n## text_encoders\n---\n- [umt5_xxl_fp8_e4m3fn_scaled.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors?download=true)\n\n## LoRA's\n---\n- [high_noise_model.safetensors](https://huggingface.co/lightx2v/Wan2.2-Lightning/resolve/main/Wan2.2-I2V-A14B-4steps-lora-rank64-Seko-V1/high_noise_model.safetensors?download=true)\n- [low_noise_model.safetensors](https://huggingface.co/lightx2v/Wan2.2-Lightning/resolve/main/Wan2.2-I2V-A14B-4steps-lora-rank64-Seko-V1/low_noise_model.safetensors?download=true)\n\n## Model\n---\n- [Wan2.2-I2V-A14B-HighNoise-Q4_K_M.gguf](https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/HighNoise/Wan2.2-I2V-A14B-HighNoise-Q4_K_M.gguf?download=true)\n- [Wan2.2-I2V-A14B-LowNoise-Q4_K_M.gguf](https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/LowNoise/Wan2.2-I2V-A14B-LowNoise-Q4_K_M.gguf?download=true)\n\n\n## VAE\n---\n- [Wan2.1_VAE.safetensors](https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors?download=true)\n\n\n## Model Storage Location\n---\n```\n📂 ComfyUI/\n├── 📂 models/\n│   ├── 📂 text_encoders/WAN_2.2/\n|   │      └── umt5_xxl_fp8_e4m3fn_scaled.safetensors\n│   ├── 📂 loras/WAN_2.2/\n│   │      └── low_noise_model.safetensors\n│   │      └── high_noise_model.safetensors\n│   ├── 📂 diffusion_models/WAN_2.2/\n│   │      └── Wan2.2-I2V-A14B-HighNoise-Q4_K_M.gguf\n│   │      └── Wan2.2-I2V-A14B-LowNoise-Q4_K_M.gguf\n│   └── 📂 vae/WAN_2.2/\n│          └── Wan2.1_VAE.safetensors\n```\n"
-      ],
-      "color": "#222",
-      "bgcolor": "#000"
-    },
-    {
-      "id": 12,
-      "type": "JonModelOnlyLoader",
-      "pos": [
-        954.4962488660937,
-        344.95917888834634
-      ],
-      "size": [
-        283.927734375,
-        434
-      ],
-      "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
-          "name": "lightning_low_noise_model_strength",
-          "type": "FLOAT",
-          "link": 24
+          "name": "override_image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "override_image2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "override_image3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
         }
       ],
       "outputs": [
         {
-          "name": "model",
-          "type": "MODEL",
+          "name": "image1",
+          "type": "IMAGE",
           "links": [
-            21
+            29
           ]
+        },
+        {
+          "name": "image2",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "image3",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "links": [
+            34
+          ]
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            35
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            36
+          ]
+        },
+        {
+          "name": "positive_text",
+          "type": "STRING",
+          "links": [
+            37
+          ]
+        },
+        {
+          "name": "negative_text",
+          "type": "STRING",
+          "links": [
+            38
+          ]
+        },
+        {
+          "name": "total_frames",
+          "type": "INT",
+          "links": [
+            39
+          ]
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "links": [
+            40
+          ]
+        },
+        {
+          "name": "upscale_enabled",
+          "type": "BOOLEAN",
+          "links": null
         }
       ],
       "properties": {
         "aux_id": "JosephMillsAtWork/JON",
         "ver": "b11c217be5dd3ad9c1660a4e136ba471a72a8c05",
-        "Node name for S&R": "JonModelOnlyLoader"
+        "Node name for S&R": "JonWorkflowSettings"
       },
       "widgets_values": [
         null,
         null,
-        true,
+        "example.png",
+        "example.png",
+        "example.png",
         null,
         null,
-        "sageattn_qk_int8_pv_fp8_cuda++",
-        true,
-        "{\"442944\":{\"enabled\":true,\"name\":\"WAN_2.2/lightning_low_noise_model.safetensors\",\"input_name\":\"lightning_low_noise_model_strength\"}}",
+        0,
+        "fixed",
         null,
         null,
-        "None",
-        "WAN_2.2/Wan2.2-I2V-A14B-HighNoise-Q4_K_M.gguf",
+        "4:3",
+        "480p",
+        "Landscape",
         null,
         null,
+        "make a video about a woman working in a store called JON",
         null,
         null,
-        true,
-        "WAN_2.2/lightning_low_noise_model.safetensors",
+        "",
         null,
-        null
+        null,
+        "bicubic",
+        "PreserveAspectCrop",
+        "black",
+        null,
+        null,
+        1,
+        null,
+        null,
+        false
       ]
-    },
-    {
-      "id": 19,
-      "type": "MarkdownNote",
-      "pos": [
-        987.7038245965724,
-        151.38578660374978
-      ],
-      "size": [
-        210,
-        88
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "# LOW\n\n"
-      ],
-      "color": "#222",
-      "bgcolor": "#000"
-    },
-    {
-      "id": 18,
-      "type": "MarkdownNote",
-      "pos": [
-        667.091398291898,
-        91.85599385127738
-      ],
-      "size": [
-        210,
-        88
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [],
-      "properties": {},
-      "widgets_values": [
-        "# HIGH\n"
-      ],
-      "color": "#222",
-      "bgcolor": "#000"
     }
   ],
   "links": [
-    [
-      9,
-      6,
-      0,
-      7,
-      4,
-      "IMAGE"
-    ],
-    [
-      10,
-      6,
-      3,
-      7,
-      6,
-      "INT"
-    ],
-    [
-      12,
-      6,
-      4,
-      7,
-      7,
-      "INT"
-    ],
-    [
-      13,
-      6,
-      5,
-      7,
-      8,
-      "INT"
-    ],
-    [
-      14,
-      6,
-      6,
-      7,
-      9,
-      "STRING"
-    ],
-    [
-      15,
-      6,
-      7,
-      7,
-      10,
-      "STRING"
-    ],
-    [
-      16,
-      6,
-      8,
-      7,
-      11,
-      "INT"
-    ],
-    [
-      17,
-      6,
-      9,
-      7,
-      12,
-      "FLOAT"
-    ],
-    [
-      21,
-      12,
-      0,
-      7,
-      1,
-      "MODEL"
-    ],
     [
       24,
       13,
@@ -672,28 +610,100 @@
       "FLOAT"
     ],
     [
-      26,
+      29,
+      6,
+      0,
+      20,
+      4,
+      "IMAGE"
+    ],
+    [
+      30,
+      12,
+      0,
+      20,
+      1,
+      "MODEL"
+    ],
+    [
+      31,
       15,
       0,
-      7,
+      20,
       0,
       "MODEL"
     ],
     [
-      27,
+      32,
       15,
       1,
-      7,
+      20,
       2,
       "CLIP"
     ],
     [
-      28,
+      33,
       15,
       2,
-      7,
+      20,
       3,
       "VAE"
+    ],
+    [
+      34,
+      6,
+      3,
+      20,
+      6,
+      "INT"
+    ],
+    [
+      35,
+      6,
+      4,
+      20,
+      7,
+      "INT"
+    ],
+    [
+      36,
+      6,
+      5,
+      20,
+      8,
+      "INT"
+    ],
+    [
+      37,
+      6,
+      6,
+      20,
+      9,
+      "STRING"
+    ],
+    [
+      38,
+      6,
+      7,
+      20,
+      10,
+      "STRING"
+    ],
+    [
+      39,
+      6,
+      8,
+      20,
+      11,
+      "INT"
+    ],
+    [
+      40,
+      6,
+      9,
+      20,
+      12,
+      "FLOAT"
     ]
   ],
   "groups": [],
@@ -701,10 +711,10 @@
   "extra": {
     "workflowRendererVersion": "LG",
     "ds": {
-      "scale": 0.7596568315490868,
+      "scale": 1.1122135670710183,
       "offset": [
-        799.6528522230994,
-        180.63544721046895
+        -26.779296288994676,
+        18.524547783078543
       ]
     },
     "frontendVersion": "1.37.11"

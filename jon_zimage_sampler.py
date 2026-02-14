@@ -1,9 +1,17 @@
 import nodes
-from .jon_utils import get_node_class
+import comfy.utils
+import hashlib
+
+from .jon_utils import get_node_class, send_status
 
 class JonZImageSampler:
     def __init__(self):
-        pass
+        self.cache = {
+            "text_encode": {
+                "hash": None,
+                "result": None # (p_prompt, n_prompt)
+            }
+        }
 
     @classmethod
     def INPUT_TYPES(s):
@@ -19,6 +27,11 @@ class JonZImageSampler:
                     "tooltip": "The primary VAE from JonLoader"
                 }),
                 # Simple types
+                "img2img": ("BOOLEAN", {
+                    "default": False,
+                    "tooltip": "use image to image and not text to image"
+                }),
+
                 "save_image": ("BOOLEAN", {
                     "default": False,
                     "tooltip": "Save the image after generation"
@@ -52,10 +65,6 @@ class JonZImageSampler:
                 }),
             },
             "optional": {
-                "img2img": ("BOOLEAN", {
-                    "default": False,
-                    "tooltip": "use image to image and not text to image"
-                }),
                 "image": ("IMAGE", {
                     "tooltip": "The input image"
                 }),
@@ -70,9 +79,9 @@ class JonZImageSampler:
             }
         }
 
-    RETURN_TYPES = ("IMAGE",)
-    RETURN_NAMES = ("image",)
-    OUTPUT_TOOLTIPS = ("The Generated Image",)
+    RETURN_TYPES = ()
+    RETURN_NAMES = ()
+    OUTPUT_TOOLTIPS = ()
     OUTPUT_NODE = True
 
     FUNCTION = "sample"
@@ -85,6 +94,15 @@ class JonZImageSampler:
                denoise=1.0,
                img2img=False, denoise_1=1.0, image=None):
 
+        total_steps = 6
+        if img2img:
+            total_steps = total_steps + 4
+
+        total_steps = total_steps + 5
+
+        pbar = comfy.utils.ProgressBar(total_steps)
+        ns = "JonZImageSampler"
+
         p_prompt = None
         n_prompt = None
 
@@ -95,34 +113,54 @@ class JonZImageSampler:
 
         image_result = None
 
+        # do_text_encode()
         # Clip -> TextEncode
+        current_text_hash = hashlib.sha256(f"{id(clip)}_{positive}".encode()).hexdigest()
+
         if clip is not None:
-            try:
-                print(f"[JonZImageSampler] Text Encode ZImage Detected")
-                p_prompt = nodes.CLIPTextEncode().encode(clip=clip, text=positive)[0]
-                n_prompt = nodes.ConditioningZeroOut().zero_out(conditioning=p_prompt)[0]
-            except Exception as e:
-                print(f"[JonZImageSampler] CLIPTextEncoder Failed {e}")
-                raise ValueError("[JonZImageSampler] CLIPTextEncode Failed")
+            if (self.cache["text_encode"]["hash"] == current_text_hash and self.cache["text_encode"]["result"] is not None):
+                send_status(ns, "Using Cached Text Encoding")
+                p_prompt, n_prompt = self.cache["text_encode"]["result"]
+                pbar.update(2)
+            else:
+                try:
+                    send_status(ns, "No Cache Text Encode ZImage")
+                    p_prompt = nodes.CLIPTextEncode().encode(clip=clip, text=positive)[0]
+                    pbar.update(1)
+                    n_prompt = nodes.ConditioningZeroOut().zero_out(conditioning=p_prompt)[0]
+                    pbar.update(2)
+                    self.cache["text_encode"]["hash"] = current_text_hash
+                    self.cache["text_encode"]["result"] = (p_prompt, n_prompt)
+                except Exception as e:
+                    print(f"[JonZImageSampler] CLIPTextEncoder Failed {e}")
+                    raise ValueError("[JonZImageSampler] CLIPTextEncode Failed")
 
         if p_prompt is None or n_prompt is None:
             raise ValueError("[JonZImageSampler] Text Encode Failed")
-        print(f"[JonZImageSampler] Text Encode ZImage Done")
+        send_status(ns, "Text Encode ZImage Done")
+        pbar.update(3)
 
+        # do_latent()
         # Latent
+        # current_latent_hash = hashlib.sha256(f"{id(image)}_{img2img}_{width}_{height}".encode()).hexdigest()
         if img2img and image is not None:
-            print(f"[JonZImageSampler] img2img Detected")
+            send_status(ns, "img2img Detected")
             empty_lat = nodes.VAEEncode().encode(vae, image)[0]
         elif img2img and image is None:
             raise ValueError("Jon ZImage Sampler Image to Image is set but the image is not set or bad")
         else:
             empty_lat = nodes.EmptyLatentImage().generate(width, height, 1)[0]
+        pbar.update(4)
 
+
+
+        # do_sample()
         # KSampler
         mcfg = 1.0
         if img2img:
             mcfg = 5.0
 
+        # current_sampler_hash = hashlib.sha256(f"{id(model)}_{seed}_{mcfg}_{denoise}".encode()).hexdigest()
         samp_lat_res = nodes.KSampler().sample(
             model=model,
             seed=seed,
@@ -135,7 +173,8 @@ class JonZImageSampler:
             latent_image=empty_lat,
             denoise=denoise
         )
-        samp_lat = samp_lat_result[0]
+        samp_lat = samp_lat_res[0]
+        pbar.update(10)
 
         if img2img:
             samp_lat_res_1 = nodes.KSampler().sample(
@@ -152,22 +191,32 @@ class JonZImageSampler:
             )
             samp_lat_1 = samp_lat_res_1[0]
             image_result = nodes.VAEDecode().decode(vae, samp_lat_1)
+            pbar.update(14)
         else:
             image_result = nodes.VAEDecode().decode(vae, samp_lat)
 
-        print(f"[JonZImageSampler] KSampler Done")
+        send_status(ns, "KSampler Done")
 
-        # Save Image
+        # current_save_hash = hashlib.sha256(f"{id(model)}_{seed}_{mcfg}_{denoise}".encode()).hexdigest()
+        # do_save()
+        ui_results = {}
         if save_image:
-            # def save_images(self, images, filename_prefix="ComfyUI", prompt=None, extra_pnginfo=None):
-            nodes.SaveImage().save_images(
+            full_output = nodes.SaveImage().save_images(
                 images=image_result[0],
                 filename_prefix=save_name,
                 prompt=positive,
                 extra_pnginfo=None
             )
+            ui_results = full_output.get("ui", {})
+        else:
+            preview_output = nodes.PreviewImage().save_images(
+                images=image_result[0],
+                filename_prefix="JonPreview",
+            )
+            ui_results = preview_output.get("ui", {})
 
-        return image_result
+        pbar.update(total_steps)
+        return {"ui": ui_results}
 
 
 NODE_CLASS_MAPPINGS = {

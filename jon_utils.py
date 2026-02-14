@@ -4,6 +4,10 @@ import math
 import os
 import folder_paths
 import nodes
+import re
+
+from server import PromptServer
+
 
 
 # comfy.ldm.lightricks
@@ -55,6 +59,15 @@ def get_sage_func(sage_mode):
             return None
     return None
 
+
+def pascal_to_snake_case(name):
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+def send_status(namespace, msg):
+    event_name = f"{pascal_to_snake_case(namespace)}_status"
+    print(f"[{namespace}] {msg}")
+    PromptServer.instance.send_sync(event_name, {"message": msg})
 
 
 
