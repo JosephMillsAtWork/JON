@@ -59,10 +59,6 @@ class JonQwen2511Sampler:
                 }),
             },
 
-            # "hidden": {
-            #     "prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
-            # },
-
             "optional": {
                 "image1": ("IMAGE", {
                     "tooltip": "The 1st Image"
